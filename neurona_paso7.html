@@ -1,0 +1,179 @@
+<html>
+<SCRIPT>
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+
+class CapaNeuronal {
+  constructor (weights, bias) {
+	this.weights = weights;
+	this.bias = bias;
+	this.neuronas = [bias.lenght];
+  }
+
+  forward (inputs) {
+  // procesa calculos
+
+	// por cada neurona
+	for(let n=0; n<bias.length; n++){
+
+		// init
+		this.neuronas[n] = 0;
+
+		// multiplica todas las entradas con los pesos
+		for(let i=0; i<inputs.length; i++){
+			this.neuronas[n] += inputs[i] * this.weights[n][i];
+		}
+
+		// suma bias
+		this.neuronas[n] += this.bias[n];
+	}
+
+  }
+
+// entrega resultado como salida
+  get output() {
+	return this.neuronas;
+  }
+
+}
+
+
+class Relu {
+   constructor() {
+	this.result = [];
+   }
+
+   forward (inputs) {
+	this.sum = 0; this.count=0;
+	// inputs.forEach(input => this.result += input);
+
+	// relu
+	this.result = inputs.map(input => input<0?0:input);
+
+	// estadistica   
+	 inputs.forEach(input => {this.sum += input; this.count++; });
+	// inputs.forEach((input) {this.sum += input; this.count++;});
+	this.mean = this.sum / this.count;
+   }
+
+  get output() {
+	return this.result;
+  }
+
+}
+
+
+class SoftMax {
+   constructor() {
+	this.result = [];
+   }
+
+   forward (inputs) {
+	this.sum = 0; this.count=0;
+	// inputs.forEach(input => this.result += input);
+
+	// estadistica   
+	 inputs.forEach(input => {this.sum += input; this.count++; });
+	// inputs.forEach((input) {this.sum += input; this.count++;});
+	this.mean = this.sum / this.count;
+
+	// SoftMax
+	this.result = inputs.map(input => input/this.sum);
+   }
+
+  get output() {
+	return this.result;
+  }
+
+}
+
+
+// Clase Neurona unica, se inicializa con pesos y bias, se llama con entradas y se retorna la salida
+class Neurona {
+  constructor () {
+	this.inicializada = False;
+	this.result = 0;
+  }
+
+  setup (weights, bias) {
+	this.inicializada = True;
+	this.weights = weights;
+	this.bias = bias;
+
+	// peso[0] es el bias
+	//this.weights.unshift(bias);
+
+	// this.result = 0;
+  }
+
+  forward (inputs) {
+	// inputs[0] es 1 para ser neutro en la multiplicacion por el bias
+	// inputs.unshift(1);
+
+	// inicializa
+	let result = 0;
+
+	// multiplica todas las entradas con los pesos (incluido el bias*1)
+	for(let i=0; i<inputs.length; i++){
+		result += inputs[i] * this.weights[i];
+	}
+
+	// entrega resultado como salida
+	this.result = result + this.bias;
+  }
+
+  get output() {
+	return this.result;
+  }
+}
+
+
+// 4 entradas, 3 neuronas, tres salidas
+
+// 4 Entradas, opc reemplazar bias como x[0]=1, asi se agrega un peso extra el cual reemplaza el valor del bias
+let x = [1.0, 2.0, 3.0, 2.5];
+
+// Pesos que conectan las 4 entradas con las 3 neuronas
+let wN1 = [0.2, 0.8, -0.5, 1.0];
+let wN2 = [0.5, -0.91, 0.26, -0.5];
+let wN3 = [-0.26, -0.27, 0.17, 0.87];
+let W = [wN1, wN2, wN3];
+
+// Sesgos de las 3 neuronas
+let bias = [2.0, 3.0, 0.5];
+
+// crear instancias capa neuronal con pesos idem cantidad entradas, y bias idem salidas
+var layerFC = new CapaNeuronal(W, bias);
+var activacion = new Relu();
+var softmax = new SoftMax();
+
+// setiar valores de pesos y bias
+// layerFC.setup(W, bias);
+
+// paso de variables entrada y Proceso calculo de salida de las 3 neuronas
+layerFC.forward(x);
+activacion.forward(layerFC.output);
+softmax.forward(layerFC.output);
+
+
+// Salida
+console.log(`layerFC : ${layerFC.output}`);
+console.log(`activacion : ${activacion.output}`);
+console.log(`softmax : ${softmax.output}`);
+
+
+
+/////////////////////////////////////////////////////
+//class Matriz {
+//  constructor () { }
+//  multiply() {}
+//  sum() {}
+//}
+
+/*
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes
+// https://www.freecodecamp.org/espanol/news/arreglos-de-objetos-en-javascript-actualizar/
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+*/
+
+</SCRIPT>
+</html>

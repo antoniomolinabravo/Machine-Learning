@@ -1,0 +1,26 @@
+<html>
+<SCRIPT>
+// 4 entradas, 3 neuronas, tres salidas
+
+// 4 Entradas, opc reemplazar bias como x[0]=1, asi se agrega un peso extra el cual reemplaza el valor del bias
+let x = [1.0, 2.0, 3.0, 2.5];
+
+// Pesos que conectan las 4 entradas con las 3 neuronas
+let wN1 = [0.2, 0.8, -0.5, 1.0];
+let wN2 = [0.5, -0.91, 0.26, -0.5];
+let wN3 = [-0.26, -0.27, 0.17, 0.87];
+
+// Sesgos de las 3 neuronas
+let bias = [2.0, 3.0, 0.5];
+
+// Proceso calculo de salida de las 3 neuronas
+let output = [ x[0] * wN1[0] + x[1] * wN1[1] + x[2] * wN1[2] + x[3] * wN1[3] + bias[0],
+		x[0] * wN2[0] + x[1] * wN2[1] + x[2] * wN2[2] + x[3] * wN2[3] + bias[1],
+		x[0] * wN3[0] + x[1] * wN3[1] + x[2] * wN3[2] + x[3] * wN3[3] + bias[2]
+];
+
+// Salida
+console.log(`output : ${output}`);
+
+</SCRIPT>
+</html>

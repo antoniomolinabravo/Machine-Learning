@@ -1,0 +1,116 @@
+<html>
+<SCRIPT>
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
+
+// Clase Neurona unica, se inicializa con pesos y bias, se llama con entradas y se retorna la salida
+class Neurona {
+  constructor () {
+	this.inicializada = False;
+	this.result = 0;
+  }
+
+  setup (weights, bias) {
+	this.inicializada = True;
+	this.weights = weights;
+	this.bias = bias;
+
+	// peso[0] es el bias
+	//this.weights.unshift(bias);
+
+	// this.result = 0;
+  }
+
+  forward (inputs) {
+	// inputs[0] es 1 para ser neutro en la multiplicacion por el bias
+	// inputs.unshift(1);
+
+	// inicializa
+	let result = 0;
+
+	// multiplica todas las entradas con los pesos (incluido el bias*1)
+	for(let i=0; i<inputs.length; i++){
+		result += inputs[i] * this.weights[i];
+	}
+
+	// entrega resultado como salida
+	this.result = result + this.bias;
+  }
+
+  get output() {
+	return this.result;
+  }
+}
+
+
+// 4 entradas, 3 neuronas, tres salidas
+
+// 4 Entradas, opc reemplazar bias como x[0]=1, asi se agrega un peso extra el cual reemplaza el valor del bias
+let x = [1.0, 2.0, 3.0, 2.5];
+
+// Pesos que conectan las 4 entradas con las 3 neuronas
+let wN1 = [0.2, 0.8, -0.5, 1.0];
+let wN2 = [0.5, -0.91, 0.26, -0.5];
+let wN3 = [-0.26, -0.27, 0.17, 0.87];
+
+// Sesgos de las 3 neuronas
+let bias = [2.0, 3.0, 0.5];
+
+// crear instancias neuronas
+var neurona1 = new Neurona();
+var neurona2 = new Neurona();
+var neurona3 = new Neurona();
+
+// setiar valores de pesos y bias
+neurona1.setup(wN1, bias[0]);
+neurona2.setup(wN2, bias[1]);
+neurona3.setup(wN3, bias[2]);
+
+// paso de variables entrada y Proceso calculo de salida de las 3 neuronas
+neurona1.forward(x);
+neurona2.forward(x);
+neurona3.forward(x);
+
+// Salida
+console.log(`neurona1 : ${neurona1.output}`);
+console.log(`neurona2 : ${neurona2.output}`);
+console.log(`neurona3 : ${neurona3.output}`);
+
+
+
+/////////////////////////////////////////////////////
+//class Matriz {
+//  constructor () { }
+//  multiply() {}
+//  sum() {}
+//}
+
+/*
+// https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Classes
+// https://www.freecodecamp.org/espanol/news/arreglos-de-objetos-en-javascript-actualizar/
+
+class CapaNeuronal {
+  constructor (n_neuronas) {
+	// peso[0] es el bias
+	// this.weights = weights;
+	let neuronas = new Neuronas[n_neuronas];
+  }
+
+  forward (inputs) {
+	let i=0;
+
+	for(i=0; i<inputs.length; i++){
+		//if (! neuronas[i].inicializada ) {
+		//inicializa las neuronas si no lo estan
+		//neuronas[i].setup(wN1, bias[0]);
+		//}
+	}
+
+	for(i=0; i<inputs.length; i++){
+		neuronas[i].forward(inputs);
+	}
+  }
+}
+*/
+
+</SCRIPT>
+</html>
